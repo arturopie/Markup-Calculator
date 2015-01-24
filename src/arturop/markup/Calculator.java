@@ -4,19 +4,25 @@ public class Calculator {
 	public static final String DRUGS = "drugs";
 	public static final String ELECTRONICS = "electronics";
 	public static final String FOOD = "food";
-	
+
+	private LabourMarkup labourMarkup;
+
 	public static double computePrice(double basePrice, int numberPeople, String material){
-		long finalPrice = new Calculator().compute(toPennies(basePrice), numberPeople, material);
+		long finalPrice = new Calculator(new LabourMarkup(0.012)).compute(toPennies(basePrice), numberPeople, material);
 		return toDollars(finalPrice);
 	}
 
+	public Calculator(LabourMarkup labourMarkup){
+		this.labourMarkup = labourMarkup;
+	}
+
 	// TODO: document this method. Explain basePrice is in pennies.
-	public long compute(long basePrice, int numberPeople, String material){
+	private long compute(long basePrice, int numberPeople, String material){
 		validateArguments(basePrice, numberPeople);
-		
+
 		long flatPrice = Math.round(basePrice + basePrice * 0.05);
-		long labourCharge = Math.round(flatPrice * numberPeople * 0.012);
-		
+		long labourCharge = labourMarkup.compute(flatPrice, numberPeople);
+
 		double materialMarkup;
 		if(material.equals(DRUGS))
 			materialMarkup = 0.075;
@@ -26,14 +32,14 @@ public class Calculator {
 			materialMarkup = 0.13;
 		else
 			materialMarkup = 0;
-		
-		long materialCharge = Math.round(flatPrice * materialMarkup);	
+
+		long materialCharge = Math.round(flatPrice * materialMarkup);
 		return flatPrice + labourCharge + materialCharge;
 	}
 
 	private void validateArguments(long basePrice, int numberPeople) {
 		if (basePrice < 0) throw new IllegalArgumentException("Base Price must be greater or equal to 0.");
-		if (numberPeople < 0) throw new IllegalArgumentException("Number of people must be greater or equal to 0.");
+
 	}
 
 	private static long toPennies(double dollars) {

@@ -8,9 +8,4 @@ public class CalculatorTest {
 	public void throwExceptionWhenNegativeBasePrice() {
 		Calculator.computePrice(-1, 1, Calculator.FOOD);
 	}
-
-	@Test(expected=IllegalArgumentException.class)
-	public void throwExceptionWhenNegativeNumberOfPeople() {
-		Calculator.computePrice(1, -1, Calculator.FOOD);
-	}
 }
