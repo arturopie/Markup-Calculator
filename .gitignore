@@ -1,0 +1,41 @@
+.metadata
+*.class
+*.s
+*.pydevproject
+.project
+.metadata
+*.orig
+bin
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+
+# External tool builders
+.externalToolBuilders/
+
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+
+# CDT-specific
+.cproject
+
+
+# PDT-specific
+.buildpath
+
+# ant-junit output
+TEST*Test.xml
+
+# RPC directory file
+directory.properties
