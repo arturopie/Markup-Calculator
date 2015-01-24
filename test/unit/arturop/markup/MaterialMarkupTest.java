@@ -16,8 +16,9 @@ public class MaterialMarkupTest {
 		markups.put("TypeB", 0.8);
 		MaterialMarkup markup = new MaterialMarkup(markups);
 
-		assertEquals(8, markup.compute(10, new Job(1, "TypeB")));
+		assertEquals(8, markup.compute(10, build_job("TypeB")));
 	}
+
 
 	@Test
 	public void computeDoesNotApplyMarkupIfTypeNotDefined() {
@@ -25,7 +26,7 @@ public class MaterialMarkupTest {
 		markups.put("MyType", 0.5);
 		MaterialMarkup markup = new MaterialMarkup(markups);
 
-		assertEquals(0, markup.compute(2, new Job(1, "SomethingElse")));
+		assertEquals(0, markup.compute(2, build_job("SomethingElse")));
 	}
 
 	@Test
@@ -34,6 +35,10 @@ public class MaterialMarkupTest {
 		markups.put("MyType", 0.5);
 		MaterialMarkup markup = new MaterialMarkup(markups);
 
-		assertEquals(3, markup.compute(5, new Job(1, "MyType")));
+		assertEquals(3, markup.compute(5, build_job("MyType")));
+	}
+
+	private Job build_job(String materialType) {
+		return new Job(1, materialType);
 	}
 }

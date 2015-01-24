@@ -9,14 +9,14 @@ public class LabourMarkupTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void computeThrowsExceptionWhenNegativeNumberOfPeople() {
 		LabourMarkup markup = new LabourMarkup(2);
-		markup.compute(1, new Job(-2, "a"));
+		markup.compute(1, build_job(-2));
 	}
 
 	@Test
 	public void computeAppliesLabourMarkup() {
 		LabourMarkup markup = new LabourMarkup(0.5);
 
-		long charge = markup.compute(100, new Job(1, "a"));
+		long charge = markup.compute(100, build_job(1));
 
 		assertEquals(50, charge);
 	}
@@ -25,7 +25,7 @@ public class LabourMarkupTest {
 	public void computeAppliesLabourMarkupPerPerson() {
 		LabourMarkup markup = new LabourMarkup(0.5);
 
-		long charge = markup.compute(100, new Job(5, "a"));
+		long charge = markup.compute(100, build_job(5));
 
 		assertEquals(50 * 5, charge);
 	}
@@ -34,8 +34,12 @@ public class LabourMarkupTest {
 	public void computeRoundsToNearestInteger() {
 		LabourMarkup markup = new LabourMarkup(0.5);
 
-		long charge = markup.compute(5, new Job(1, "a"));
+		long charge = markup.compute(5, build_job(1));
 
 		assertEquals(3, charge);
+	}
+
+	private Job build_job(int numberPeople) {
+		return new Job(numberPeople, "MaterialType");
 	}
 }
