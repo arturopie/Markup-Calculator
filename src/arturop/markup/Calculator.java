@@ -1,40 +1,31 @@
 package arturop.markup;
 
-// TODO: use Strings and constants
-enum MaterialType{
-	DRUGS,
-	ELECTRONICS,
-	FOOD,
-	BOOKS
-}
-
 public class Calculator {
-	public static double computePrice(double basePrice, int numberPeople, MaterialType material){
+	public static final String DRUGS = "drugs";
+	public static final String ELECTRONICS = "electronics";
+	public static final String FOOD = "food";
+	
+	public static double computePrice(double basePrice, int numberPeople, String material){
 		long finalPrice = new Calculator().compute(toPennies(basePrice), numberPeople, material);
 		return toDollars(finalPrice);
 	}
 
 	// TODO: document this method. Explain basePrice is in pennies.
-	public long compute(long basePrice, int numberPeople, MaterialType material){
+	public long compute(long basePrice, int numberPeople, String material){
 		validateArguments(basePrice, numberPeople);
 		
 		long flatPrice = Math.round(basePrice + basePrice * 0.05);
 		long labourCharge = Math.round(flatPrice * numberPeople * 0.012);
 		
 		double materialMarkup;
-		switch(material){
-		case DRUGS:
+		if(material.equals(DRUGS))
 			materialMarkup = 0.075;
-			break;
-		case ELECTRONICS:
+		else if(material.equals(ELECTRONICS))
 			materialMarkup = 0.02;
-			break;
-		case FOOD:
+		else if(material.equals(FOOD))
 			materialMarkup = 0.13;
-			break;
-		default:
+		else
 			materialMarkup = 0;
-		}
 		
 		long materialCharge = Math.round(flatPrice * materialMarkup);	
 		return flatPrice + labourCharge + materialCharge;
