@@ -8,8 +8,7 @@ public class CalculatorIntegrationTest {
 
 	@Test
 	public void testInput1FromProblemDescription() {
-		Calculator calculator = new Calculator();
-		double price = calculator.computePrice(1299.99, 3, MaterialType.FOOD);
+		double price = Calculator.computePrice(1299.99, 3, MaterialType.FOOD);
 		assertEquals(1591.58, price, 0.001);
 	}
 

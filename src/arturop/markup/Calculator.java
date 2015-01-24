@@ -8,8 +8,11 @@ enum MaterialType{
 }
 
 public class Calculator {
+	public static double computePrice(double basePrice, int numberPeople, MaterialType material){
+		return new Calculator().compute(basePrice, numberPeople, material);
+	}
 
-	public double computePrice(double basePrice, int numberPeople, MaterialType material){
+	public double compute(double basePrice, int numberPeople, MaterialType material){
 		return 0.0;
 	}
 }
