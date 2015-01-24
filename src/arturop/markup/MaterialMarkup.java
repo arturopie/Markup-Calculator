@@ -10,8 +10,8 @@ public class MaterialMarkup {
 		this.markups = markups;
 	}
 
-	public long compute(long price, String materialType) {
-		Double value = markups.get(materialType);
+	public long compute(long price, Job job) {
+		Double value = markups.get(job.materialType);
 		double markup = (value == null) ? 0 : value;
 
 		return Math.round(price * markup);

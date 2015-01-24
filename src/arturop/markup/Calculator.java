@@ -11,14 +11,16 @@ public class Calculator {
 	private LabourMarkup labourMarkup;
 	private MaterialMarkup materialMarkup;
 
-	public static double computePrice(double basePrice, int numberPeople, String material){
-		// TODO: extracts Job concept
+	public static double computePrice(double basePrice, int numberPeople, String materialType){
+		Job job = new Job(numberPeople, materialType);
+
 		Map<String, Double> metrialMarkups = new HashMap<String, Double>();
 		metrialMarkups.put(DRUGS, 0.075);
 		metrialMarkups.put(ELECTRONICS, 0.02);
 		metrialMarkups.put(FOOD, 0.13);
 
-		long finalPrice = new Calculator(new LabourMarkup(0.012), new MaterialMarkup(metrialMarkups)).compute(toPennies(basePrice), numberPeople, material);
+		// TODO: extracts percentages to constants
+		long finalPrice = new Calculator(new LabourMarkup(0.012), new MaterialMarkup(metrialMarkups)).compute(toPennies(basePrice), job);
 		return toDollars(finalPrice);
 	}
 
@@ -28,17 +30,17 @@ public class Calculator {
 	}
 
 	// TODO: document this method. Explain basePrice is in pennies.
-	private long compute(long basePrice, int numberPeople, String material){
-		validateArguments(basePrice, numberPeople);
+	private long compute(long basePrice, Job job){
+		validateArguments(basePrice, job);
 
 		long flatPrice = Math.round(basePrice + basePrice * 0.05);
-		long labourCharge = labourMarkup.compute(flatPrice, numberPeople);
-		long materialCharge = materialMarkup.compute(flatPrice, material);
+		long labourCharge = labourMarkup.compute(flatPrice, job);
+		long materialCharge = materialMarkup.compute(flatPrice, job);
 
 		return flatPrice + labourCharge + materialCharge;
 	}
 
-	private void validateArguments(long basePrice, int numberPeople) {
+	private void validateArguments(long basePrice, Job job) {
 		if (basePrice < 0) throw new IllegalArgumentException("Base Price must be greater or equal to 0.");
 	}
 
