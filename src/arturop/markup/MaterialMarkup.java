@@ -12,9 +12,12 @@ public class MaterialMarkup implements MarkupCalculator {
 
 	@Override
 	public long compute(long price, Job job) {
-		Double value = markups.get(job.getMaterialType());
-		double markup = (value == null) ? 0 : value;
-
+		double markup = markupFor(job.getMaterialType());
 		return Math.round(price * markup);
+	}
+
+	private double markupFor(String materialType) {
+		Double markup = markups.get(materialType);
+		return (markup == null) ? 0 : markup;
 	}
 }
