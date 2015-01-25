@@ -1,11 +1,19 @@
 package arturop.markup;
 
 public class Job {
-	public int numberPeople;
-	public String materialType;
+	private int numberPeople;
+	private String materialType;
 
 	public Job(int numberPeople, String materialType) {
 		this.numberPeople = numberPeople;
 		this.materialType = materialType;
+	}
+
+	public int getNumberPeople() {
+		return numberPeople;
+	}
+
+	public String getMaterialType() {
+		return materialType;
 	}
 }

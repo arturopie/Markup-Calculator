@@ -12,7 +12,7 @@ public class MaterialMarkup implements MarkupCalculator {
 
 	@Override
 	public long compute(long price, Job job) {
-		Double value = markups.get(job.materialType);
+		Double value = markups.get(job.getMaterialType());
 		double markup = (value == null) ? 0 : value;
 
 		return Math.round(price * markup);

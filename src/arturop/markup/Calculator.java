@@ -64,7 +64,7 @@ public class Calculator {
 	 *
 	 * @param basePrice  Base price in pennies since Java's double/float are not suitable for representing money
 	 * @param job        Contains information about the job used by calculator to compute final price.
-	 * @return           Final price after applying all markups
+	 * @return           Final price in pennies after applying all markups
 	 */
 	private long compute(long basePrice, Job job){
 		long flatPrice = flatMarkup.compute(basePrice, job);
