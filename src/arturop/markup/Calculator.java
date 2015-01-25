@@ -13,16 +13,16 @@ public class Calculator {
 	private static final double FLAT_MARKUP = 0.05;
 	private static final double PER_PERSON_MARKUP = 0.012;
 	private static final Map<String, Double> MATERIAL_MARKUPS;
-    static {
-        Map<String, Double> markup = new HashMap<String, Double>();
-        markup.put(DRUGS, 0.075);
-        markup.put(ELECTRONICS, 0.02);
-        markup.put(FOOD, 0.13);
-        MATERIAL_MARKUPS = Collections.unmodifiableMap(markup);
-    }
-    // CONFIGURATION ENDS
+	static {
+		Map<String, Double> markup = new HashMap<String, Double>();
+		markup.put(DRUGS, 0.075);
+		markup.put(ELECTRONICS, 0.02);
+		markup.put(FOOD, 0.13);
+		MATERIAL_MARKUPS = Collections.unmodifiableMap(markup);
+	}
+	// CONFIGURATION ENDS
 
-    private MarkupCalculator flatMarkup;
+	private MarkupCalculator flatMarkup;
 	private MarkupCalculator labourMarkup;
 	private MarkupCalculator materialMarkup;
 
