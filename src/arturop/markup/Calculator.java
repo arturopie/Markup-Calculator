@@ -1,5 +1,6 @@
 package arturop.markup;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,20 +9,26 @@ public class Calculator {
 	public static final String ELECTRONICS = "electronics";
 	public static final String FOOD = "food";
 
-	private MarkupCalculator flatMarkup;
+	private static final double FLAT_MARKUP = 0.05;
+	private static final double PER_PERSON_MARKUP = 0.012;
+	private static final Map<String, Double> materialMarkups;
+    static {
+        Map<String, Double> markup = new HashMap<String, Double>();
+        markup.put(DRUGS, 0.075);
+        markup.put(ELECTRONICS, 0.02);
+        markup.put(FOOD, 0.13);
+        materialMarkups = Collections.unmodifiableMap(markup);
+    }
+
+    private MarkupCalculator flatMarkup;
 	private MarkupCalculator labourMarkup;
 	private MarkupCalculator materialMarkup;
 
 	public static double computePrice(double basePrice, int numberPeople, String materialType){
+		Calculator calculator = new Calculator(new FlatMarkup(FLAT_MARKUP), new LabourMarkup(PER_PERSON_MARKUP), new MaterialMarkup(materialMarkups));
 		Job job = new Job(numberPeople, materialType);
+		long finalPrice = calculator.compute(toPennies(basePrice), job);
 
-		Map<String, Double> metrialMarkups = new HashMap<String, Double>();
-		metrialMarkups.put(DRUGS, 0.075);
-		metrialMarkups.put(ELECTRONICS, 0.02);
-		metrialMarkups.put(FOOD, 0.13);
-
-		// TODO: extracts percentages to constants
-		long finalPrice = new Calculator(new FlatMarkup(0.05), new LabourMarkup(0.012), new MaterialMarkup(metrialMarkups)).compute(toPennies(basePrice), job);
 		return toDollars(finalPrice);
 	}
 
@@ -33,7 +40,7 @@ public class Calculator {
 
 	// TODO: document this method. Explain basePrice is in pennies.
 	private long compute(long basePrice, Job job){
-		validateArguments(basePrice, job);
+		validateArguments(basePrice);
 
 		long flatPrice = flatMarkup.compute(basePrice, job);
 		long labourCharge = labourMarkup.compute(flatPrice, job);
@@ -42,7 +49,7 @@ public class Calculator {
 		return flatPrice + labourCharge + materialCharge;
 	}
 
-	private void validateArguments(long basePrice, Job job) {
+	private void validateArguments(long basePrice) {
 		if (basePrice < 0) throw new IllegalArgumentException("Base Price must be greater or equal to 0.");
 	}
 
