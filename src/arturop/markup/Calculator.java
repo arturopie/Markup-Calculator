@@ -8,8 +8,9 @@ public class Calculator {
 	public static final String ELECTRONICS = "electronics";
 	public static final String FOOD = "food";
 
-	private LabourMarkup labourMarkup;
-	private MaterialMarkup materialMarkup;
+	private MarkupCalculator flatMarkup;
+	private MarkupCalculator labourMarkup;
+	private MarkupCalculator materialMarkup;
 
 	public static double computePrice(double basePrice, int numberPeople, String materialType){
 		Job job = new Job(numberPeople, materialType);
@@ -20,11 +21,12 @@ public class Calculator {
 		metrialMarkups.put(FOOD, 0.13);
 
 		// TODO: extracts percentages to constants
-		long finalPrice = new Calculator(new LabourMarkup(0.012), new MaterialMarkup(metrialMarkups)).compute(toPennies(basePrice), job);
+		long finalPrice = new Calculator(new FlatMarkup(0.05), new LabourMarkup(0.012), new MaterialMarkup(metrialMarkups)).compute(toPennies(basePrice), job);
 		return toDollars(finalPrice);
 	}
 
-	private Calculator(LabourMarkup labourMarkup, MaterialMarkup materialMarkup){
+	private Calculator(MarkupCalculator flatMarkup, MarkupCalculator labourMarkup, MarkupCalculator materialMarkup){
+		this.flatMarkup = flatMarkup;
 		this.labourMarkup = labourMarkup;
 		this.materialMarkup = materialMarkup;
 	}
@@ -33,7 +35,7 @@ public class Calculator {
 	private long compute(long basePrice, Job job){
 		validateArguments(basePrice, job);
 
-		long flatPrice = Math.round(basePrice + basePrice * 0.05);
+		long flatPrice = flatMarkup.compute(basePrice, job);
 		long labourCharge = labourMarkup.compute(flatPrice, job);
 		long materialCharge = materialMarkup.compute(flatPrice, job);
 

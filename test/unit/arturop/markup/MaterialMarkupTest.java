@@ -19,7 +19,6 @@ public class MaterialMarkupTest {
 		assertEquals(8, markup.compute(10, build_job("TypeB")));
 	}
 
-
 	@Test
 	public void computeDoesNotApplyMarkupIfTypeNotDefined() {
 		Map<String, Double> markups = new HashMap<String, Double>();

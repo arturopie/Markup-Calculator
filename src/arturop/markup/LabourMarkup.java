@@ -1,6 +1,6 @@
 package arturop.markup;
 
-public class LabourMarkup {
+public class LabourMarkup implements MarkupCalculator {
 
 	private double labourMarkup;
 
@@ -8,6 +8,7 @@ public class LabourMarkup {
 		this.labourMarkup = labourMarkup;
 	}
 
+	@Override
 	public long compute(long price, Job job) {
 		validateArguments(job);
 

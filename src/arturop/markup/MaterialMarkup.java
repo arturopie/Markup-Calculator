@@ -2,7 +2,7 @@ package arturop.markup;
 
 import java.util.Map;
 
-public class MaterialMarkup {
+public class MaterialMarkup implements MarkupCalculator {
 
 	private Map<String, Double> markups;
 
@@ -10,6 +10,7 @@ public class MaterialMarkup {
 		this.markups = markups;
 	}
 
+	@Override
 	public long compute(long price, Job job) {
 		Double value = markups.get(job.materialType);
 		double markup = (value == null) ? 0 : value;
