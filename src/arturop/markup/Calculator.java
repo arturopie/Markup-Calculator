@@ -26,6 +26,14 @@ public class Calculator {
 	private MarkupCalculator labourMarkup;
 	private MarkupCalculator materialMarkup;
 
+	/**
+	 * Facade to Markup Calculator. It computes final Price for a job
+	 *
+	 * @param basePrice     Base price in dollars. It must be greater or equals to 0.
+	 * @param numberPeople  Number of personnel required for this job. It must be greater or equals to 0.
+	 * @param materialType  Type of materials involved.
+	 * @return              Final price after applying all markups.
+	 */
 	public static double computePrice(double basePrice, int numberPeople, String materialType){
 		validateBasePrice(basePrice);
 
@@ -51,7 +59,13 @@ public class Calculator {
 		this.materialMarkup = materialMarkup;
 	}
 
-	// TODO: document this method. Explain basePrice is in pennies.
+	/**
+	 * Computes final Price for a job
+	 *
+	 * @param basePrice  Base price in pennies since Java's double/float are not suitable for representing money
+	 * @param job        Contains information about the job used by calculator to compute final price.
+	 * @return           Final price after applying all markups
+	 */
 	private long compute(long basePrice, Job job){
 		long flatPrice = flatMarkup.compute(basePrice, job);
 		long labourCharge = labourMarkup.compute(flatPrice, job);
