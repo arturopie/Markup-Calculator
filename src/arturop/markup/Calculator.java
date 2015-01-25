@@ -29,19 +29,20 @@ public class Calculator {
 	public static double computePrice(double basePrice, int numberPeople, String materialType){
 		validateBasePrice(basePrice);
 
-		Job job = new Job(numberPeople, materialType);
-		long finalPrice = computePrice(toPennies(basePrice), job);
-		return toDollars(finalPrice);
-	}
-
-	private static long computePrice(long basePrice, Job job) {
 		Calculator calculator = new Calculator(
 			new FlatMarkup(FLAT_MARKUP),
 			new LabourMarkup(PER_PERSON_MARKUP),
 			new MaterialMarkup(MATERIAL_MARKUPS)
 		);
+		Job job = new Job(numberPeople, materialType);
 
-		return calculator.compute(basePrice, job);
+		return computePrice(calculator, basePrice, job);
+	}
+
+	private static double computePrice(Calculator calculator, double basePrice, Job job) {
+		long finalPrice = calculator.compute(toPennies(basePrice), job);
+
+		return toDollars(finalPrice);
 	}
 
 	private Calculator(MarkupCalculator flatMarkup, MarkupCalculator labourMarkup, MarkupCalculator materialMarkup){
